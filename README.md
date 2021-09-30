@@ -11,7 +11,6 @@ Use *telescope.nvim* to make a list of directories you want to fuzzy find in.
 - Using [vim-plug](https://github.com/junegunn/vim-plug)
 ```viml
 Plug 'torbratsberg/telescope-dir-find'
-Plug 'torbratsberg/telescope-dir-find'
 ```
 
 ### Keymaps
