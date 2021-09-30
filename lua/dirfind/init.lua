@@ -3,7 +3,6 @@ local finders = require "telescope.finders"
 local conf = require("telescope.config").values
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
-local action_utils = require "telescope.actions.utils"
 
 local dir_find = {}
 
@@ -15,13 +14,9 @@ dir_find.search_dirs = function()
 end
 
 
-local getDirTable = function(sep)
+local getDirTable = function()
 	local res = io.popen("fd -H -t d -d 10"):read("*a")
 	local sep = '\n'
-
-	if sep == nil then
-		sep = "%s"
-	end
 
 	local t={}
 	for str in string.gmatch(res, "([^"..sep.."]+)") do
@@ -31,12 +26,12 @@ local getDirTable = function(sep)
 	return t
 end
 
-dir_find.select_dirs = function(opts)
+dir_find.select_dirs = function()
 	local result = getDirTable()
 
-	local pick = pickers.new(opts, {
+	local pick = pickers.new({}, {
 		prompt_title = "Select search dirs",
-		sorter = conf.generic_sorter(opts),
+		sorter = conf.generic_sorter(),
 		finder = finders.new_table {
 			results = result
 		},
@@ -57,7 +52,6 @@ dir_find.select_dirs = function(opts)
 					end
 					table.insert(selected, text)
 				end
-				print(selected)
 				vim.api.nvim_set_var('search_dirs', selected)
 
 				actions.close(prompt_bufnr)
