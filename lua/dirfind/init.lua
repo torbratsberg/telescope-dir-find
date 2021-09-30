@@ -14,7 +14,7 @@ dir_find.search_dirs = function()
 end
 
 
-local getDirTable = function()
+local get_dir_table = function()
 	local res = io.popen("fd -H -t d -d 10"):read("*a")
 	local sep = '\n'
 
@@ -26,10 +26,10 @@ local getDirTable = function()
 	return t
 end
 
-dir_find.select_dirs = function()
-	local result = getDirTable()
+dir_find.select_dirs = function(opts)
+	local result = get_dir_table()
 
-	local pick = pickers.new({}, {
+	local pick = pickers.new(opts, {
 		prompt_title = "Select search dirs",
 		sorter = conf.generic_sorter(),
 		finder = finders.new_table {
